@@ -51,16 +51,21 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
 $action = optional_param('action', '', PARAM_ALPHA);
-if ($action === 'preparecourse' && confirm_sesskey()) {
+if ($action && confirm_sesskey()) {
     require_capability('moodle/course:update', context_course::instance($course->id));
 
-    // Вызов API из local_vkr
     try {
-        \local_vkr\course_builder::prepare_course($course->id);
-        \core\notification::success(get_string('courseprepared', 'mod_vkr'));
+        if ($action === 'prepare') {
+            \local_vkr\course_builder::prepare_course($course->id);
+            \core\notification::success(get_string('notification_courseprepared', 'mod_vkr'));
+        } else if ($action === 'reset') {
+            \local_vkr\course_builder::reset_course($course->id);
+            \core\notification::success(get_string('notification_coursereset', 'mod_vkr'));
+        }
     } catch (Exception $e) {
         \core\notification::error($e->getMessage());
     }
+
     redirect(new moodle_url('/mod/vkr/view.php', ['id' => $id]));
 }
 

@@ -28,9 +28,10 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'Защита ВКР';
 $string['modulename'] = 'Защита ВКР';
 $string['vkrname'] = 'Название';
-
 $string['main'] = 'Главная';
-$string['courseprepared'] = 'Курс подготовлен';
 $string['prepare_course'] = 'Подготовить курс';
 $string['prepare_course_help'] = 'Нажатие на кнопку создаст разделы для подготовки и защиты ВКР с необходимыми элементами';
+$string['notification_courseprepared'] = 'Курс успешно подготовлен';
 $string['prepared_course_help'] = 'В курсе уже есть необходимые разделы';
+$string['reset_course'] = 'Сбросить курс';
+$string['notification_coursereset'] = 'Курс успешно сброшен';

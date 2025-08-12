@@ -44,18 +44,27 @@
     <form method="post" action="{{action_url}}">
         <input type="hidden" name="id" value="{{cmid}}">
         <input type="hidden" name="sesskey" value="{{sesskey}}">
-        <input type="hidden" name="action" value="preparecourse">
 
-        <div class="alert alert-info mt-3">
-            {{#needtoprepare}}
+        {{#needtoprepare}}
+            <input type="hidden" name="action" value="prepare">
+
+            <div class="alert alert-info mt-3">
                 {{#str}} prepare_course_help, mod_vkr {{/str}}
-            {{/needtoprepare}}
-            {{^needtoprepare}}
+            </div>
+            <button type="submit" class="btn btn-primary">
+                {{#str}} prepare_course, mod_vkr {{/str}}
+            </button>
+        {{/needtoprepare}}
+
+        {{^needtoprepare}}
+            <input type="hidden" name="action" value="reset">
+
+            <div class="alert alert-info mt-3">
                 {{#str}} prepared_course_help, mod_vkr {{/str}}
-            {{/needtoprepare}}
-        </div>
-        <button type="submit" class="btn btn-primary" {{^needtoprepare}}disabled{{/needtoprepare}}>
-            {{#str}} prepare_course, mod_vkr {{/str}}
-        </button>
+            </div>
+            <button type="submit" class="btn btn-danger">
+                {{#str}} reset_course, mod_vkr {{/str}}
+            </button>
+        {{/needtoprepare}}
     </form>
 </div>
