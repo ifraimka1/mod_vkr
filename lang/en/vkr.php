@@ -35,3 +35,4 @@ $string['notification_courseprepared'] = 'Course prepared successfully';
 $string['prepared_course_help'] = 'Course already prepared';
 $string['reset_course'] = 'Reset course';
 $string['notification_coursereset'] = 'Course reset successfully';
+$string['duedate'] = 'Deadline for assignments';

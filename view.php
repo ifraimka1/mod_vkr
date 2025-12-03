@@ -50,28 +50,32 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-$action = optional_param('action', '', PARAM_ALPHA);
-if ($action && confirm_sesskey()) {
-    require_capability('moodle/course:update', context_course::instance($course->id));
+// Код ниже можно редактировать.
+$PAGE->requires->css('/mod/vkr/styles.css');
 
-    try {
-        if ($action === 'prepare') {
-            \local_vkr\course_builder::prepare_course($course->id);
+$formdata = [
+    'cmid' => $cm->id,
+    'needtoprepare' => (bool)\local_vkr\course_builder::need_to_prepare($course->id),
+];
+$form = new \mod_vkr\form\main_form(null, $formdata);
+
+if ($data = $form->get_data()) {
+    // Обработка данных формы
+    switch ($data->action) {
+        case 'prepare':
+            \local_vkr\course_builder::prepare_course($course->id, $data->duedate);
             \core\notification::success(get_string('notification_courseprepared', 'mod_vkr'));
-        } else if ($action === 'reset') {
+            break;
+
+        case 'reset':
             \local_vkr\course_builder::reset_course($course->id);
             \core\notification::success(get_string('notification_coursereset', 'mod_vkr'));
-        }
-    } catch (Exception $e) {
-        \core\notification::error($e->getMessage());
+            break;
     }
 
-    redirect(new moodle_url('/mod/vkr/view.php', ['id' => $id]));
+    redirect(new moodle_url('/mod/vkr/view.php', ['id' => $cm->id]));
 }
 
-$needtoprepare = (bool)\local_vkr\course_builder::need_to_prepare($course->id);
-
-$output = $PAGE->get_renderer('mod_vkr');
-echo $output->header();
-echo $output->render_main_panel($cm->id, $needtoprepare);
-echo $output->footer();
+echo $OUTPUT->header();
+$form->display();
+echo $OUTPUT->footer();

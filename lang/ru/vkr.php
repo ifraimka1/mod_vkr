@@ -35,3 +35,4 @@ $string['notification_courseprepared'] = 'Курс успешно подгото
 $string['prepared_course_help'] = 'В курсе уже есть необходимые разделы';
 $string['reset_course'] = 'Сбросить курс';
 $string['notification_coursereset'] = 'Курс успешно сброшен';
+$string['duedate'] = 'Срок сдачи ВКР';
